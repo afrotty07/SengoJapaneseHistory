@@ -1,233 +1,207 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>中3戦後史クイズ：ヒストリークエスト</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: radial-gradient(circle at top, #a1c4fd, #c2e9fb);
-            margin: 0;
-            padding: 2rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>中3戦後史クイズ：ヒストリークエスト</title>
+  <style>
+    /* ----------  Reset & Base Typography  ---------- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Hiragino Sans", "Noto Sans JP", sans-serif;
+      background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      min-height: 100vh;
+    }
 
-        #quiz-box {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 2rem;
-            width: 100%;
-            max-width: 750px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            text-align: center;
-            position: relative;
-            animation: fadeIn 0.6s ease-in-out;
-        }
+    /* ----------  Card Container  ---------- */
+    #quiz-box {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 800px;
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+      animation: fadeIn 0.6s ease;
+      text-align: center;
+    }
 
-        h2 {
-            font-size: 1.5rem;
-            margin-bottom: 1.2rem;
-        }
+    /* ----------  Text Elements  ---------- */
+    h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.2rem; color: #333; }
+    #score { font-size: 1rem; color: #555; margin-bottom: 1rem; }
+    #result { font-weight: 700; margin-top: 1rem; font-size: 1.1rem; }
+    #rank { margin-top: 1rem; font-size: 1.2rem; font-weight: 700; }
 
-        button {
-            display: block;
-            margin: 0.5rem auto;
-            padding: 0.8rem 1.5rem;
-            font-size: 1rem;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(to right, #43cea2, #185a9d);
-            color: white;
-            transition: transform 0.2s, background 0.3s;
-            cursor: pointer;
-        }
+    /* ----------  Buttons  ---------- */
+    button {
+      display: block;
+      width: 100%;
+      margin: 0.4rem 0;
+      padding: 0.8rem 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(135deg, #43cea2, #185a9d);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    button:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+    #nextBtn {
+      width: auto;
+      padding: 0.7rem 2rem;
+      background: #ff9800;
+      margin-top: 1rem;
+    }
+    #nextBtn:hover { background: #fb8c00; }
 
-        button:hover {
-            transform: scale(1.05);
-            background: linear-gradient(to right, #11998e, #38ef7d);
-        }
+    /* ----------  Explanation Box  ---------- */
+    #explanations {
+      margin-top: 1.5rem;
+      background: #f7f9fc;
+      border-left: 4px solid #43cea2;
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: left;
+    }
+    #explanations h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+    #explanations p { margin: 0.3rem 0; font-size: 0.9rem; line-height: 1.4; }
 
-        #result {
-            font-weight: bold;
-            margin-top: 1rem;
-            font-size: 1.2rem;
-        }
-
-        #score {
-            font-size: 1rem;
-            color: #222;
-            margin-bottom: 1rem;
-        }
-
-        #rank {
-            font-size: 1.2rem;
-            margin-top: 1rem;
-            color: #444;
-        }
-
-        #explanations {
-            text-align: left;
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background: #f9f9f9;
-            border-radius: 10px;
-        }
-
-        #explanations h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        #explanations p {
-            margin: 0.2rem 0;
-        }
-
-        #nextBtn {
-            background: #ff9800;
-            color: white;
-            border-radius: 50px;
-            padding: 0.7rem 2rem;
-        }
-
-        #nextBtn:hover {
-            background: #fb8c00;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
+    /* ----------  Animations  ---------- */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
-
 <body>
-    <div id="quiz-box">
-        <div id="score">スコア: 0</div>
-        <h2 id="question">問題がここに表示されます</h2>
-        <div id="choices"></div>
-        <div id="result"></div>
-        <div id="rank"></div>
-        <button id="nextBtn" onclick="nextQuestion()">▶ 次の問題へ</button>
-    </div>
+  <div id="quiz-box">
+    <div id="score">スコア: 0</div>
+    <h2 id="question">問題がここに表示されます</h2>
+    <div id="choices"></div>
+    <div id="result"></div>
+    <div id="rank"></div>
+    <button id="nextBtn" onclick="nextQuestion()">▶ 次の問題へ</button>
+  </div>
 
-    <script>
-        const fullQuiz = [
-            { question: "高度経済成長期に行われた政策は？", choices: ["財閥解体", "五カ年計画", "所得倍増計画", "緊縮財政"], answer: 2, explanation: "1960年に池田勇人内閣が打ち出した経済政策で、国民所得を10年で2倍にすることを目指しました。" },
-            { question: "公害病の一つ「イタイイタイ病」の原因は？", choices: ["鉛", "ヒ素", "水銀", "カドミウム"], answer: 3, explanation: "イタイイタイ病はカドミウムによる中毒症で、富山県の神通川流域で発生しました。" },
-            { question: "日本国憲法第9条が定めているのは？", choices: ["納税の義務", "教育の義務", "戦争の放棄", "勤労の義務"], answer: 2, explanation: "憲法第9条は、日本が戦争と戦力の保持を放棄することを定めています。" },
-            { question: "サンフランシスコ平和条約が結ばれた年は？", choices: ["1945年", "1951年", "1955年", "1960年"], answer: 1, explanation: "この条約により、日本は正式に主権を回復しました。" },
-            { question: "日中共同声明が発表されたのは？", choices: ["1951年", "1964年", "1972年", "1989年"], answer: 2, explanation: "1972年の日中共同声明で、日本と中国は正式に国交を正常化しました。" },
-            { question: "日本国憲法が公布されたのはいつ？", choices: ["1945年11月3日", "1946年5月3日", "1946年11月3日", "1947年5月3日"], answer: 2, explanation: "1946年11月3日に公布、施行は1947年5月3日です。" },
-            { question: "GHQの最高司令官は誰？", choices: ["マーシャル", "マッカーサー", "アイゼンハワー", "ルーズベルト"], answer: 1, explanation: "マッカーサーはGHQの最高司令官として戦後日本の改革を主導しました。" },
-            { question: "日本国憲法の三大原則に含まれないものは？", choices: ["国民主権", "基本的人権の尊重", "平和主義", "経済の自由化"], answer: 3, explanation: "経済の自由化は三大原則ではなく経済政策の一部です。" },
-            { question: "農地改革によって影響を受けたのは？", choices: ["小作人", "財閥", "軍人", "資本家"], answer: 0, explanation: "小作人が土地を所有できるようになり、自作農が増えました。" },
-            { question: "日本が国際連合に加盟した年は？", choices: ["1945年", "1950年", "1956年", "1960年"], answer: 2, explanation: "日本は1956年に国連に加盟し国際社会に復帰しました。" },
-            { question: "水俣病の原因物質は？", choices: ["鉛", "ヒ素", "水銀", "カドミウム"], answer: 2, explanation: "水俣病は有機水銀によって引き起こされた公害病です。" },
-            { question: "女性参政権が初めて認められたのは？", choices: ["1946年総選挙", "1947年参院選挙", "1952年衆院選挙", "1955年統一地方選"], answer: 0, explanation: "1946年の総選挙で女性が初めて投票・立候補できました。" },
-            { question: "東京オリンピックが開催された年は？", choices: ["1958年", "1960年", "1964年", "1968年"], answer: 2, explanation: "東京オリンピックは1964年に開催され、高度経済成長を象徴しました。" },
-            { question: "日米安全保障条約が改定された年は？", choices: ["1951年", "1955年", "1960年", "1972年"], answer: 2, explanation: "安保条約は1960年に改定され、相互協力の内容が加わりました。" },
-            { question: "1956年、日本が国際社会へ復帰するきっかけとなったのは？", choices: ["東京条約", "国連加盟", "日中共同声明", "日米地位協定"], answer: 1, explanation: "1956年の国連加盟によって日本は主権国家として承認されました。" }
-        ];
+  <script>
+    // ===== データセット（15問中ランダム10問） =====
+    const fullQuiz = [
+      { q: "高度経済成長期に行われた政策は？", c: ["財閥解体", "五カ年計画", "所得倍増計画", "緊縮財政"], a: 2, e: "1960年に池田勇人内閣が掲げた経済政策で、国民所得を10年で2倍にすることを目指しました。" },
+      { q: "公害病の一つ『イタイイタイ病』の原因は？", c: ["鉛", "ヒ素", "水銀", "カドミウム"], a: 3, e: "イタイイタイ病はカドミウムによる中毒症で、富山県の神通川流域で発生しました。" },
+      { q: "日本国憲法第9条が定めているのは？", c: ["納税の義務", "教育の義務", "戦争の放棄", "勤労の義務"], a: 2, e: "憲法第9条は、日本が戦争と戦力の保持を放棄することを定めています。" },
+      { q: "サンフランシスコ平和条約が結ばれた年は？", c: ["1945年", "1951年", "1955年", "1960年"], a: 1, e: "1951年の締結により、日本は正式に主権を回復しました。" },
+      { q: "日中共同声明が発表されたのは？", c: ["1951年", "1964年", "1972年", "1989年"], a: 2, e: "1972年に発表され、日中の国交が正常化しました。" },
+      { q: "日本国憲法が公布されたのはいつ？", c: ["1945年11月3日", "1946年5月3日", "1946年11月3日", "1947年5月3日"], a: 2, e: "公布は1946年11月3日、施行は1947年5月3日です。" },
+      { q: "GHQの最高司令官は誰？", c: ["マーシャル", "マッカーサー", "アイゼンハワー", "ルーズベルト"], a: 1, e: "マッカーサーは戦後改革を指導しました。" },
+      { q: "日本国憲法の三大原則に含まれないものは？", c: ["国民主権", "基本的人権の尊重", "平和主義", "経済の自由化"], a: 3, e: "経済の自由化は三大原則ではなく経済政策の一環です。" },
+      { q: "農地改革によって影響を受けたのは？", c: ["小作人", "財閥", "軍人", "資本家"], a: 0, e: "小作人が土地を所有できるようになり、自作農が増えました。" },
+      { q: "日本が国際連合に加盟した年は？", c: ["1945年", "1950年", "1956年", "1960年"], a: 2, e: "1956年に加盟し国際社会に復帰しました。" },
+      { q: "水俣病の原因物質は？", c: ["鉛", "ヒ素", "水銀", "カドミウム"], a: 2, e: "水俣病は有機水銀による公害病です。" },
+      { q: "女性参政権が初めて認められたのは？", c: ["1946年総選挙", "1947年参院選挙", "1952年衆院選挙", "1955年統一地方選"], a: 0, e: "1946年総選挙で女性が初めて投票・立候補できました。" },
+      { q: "東京オリンピックが開催された年は？", c: ["1958年", "1960年", "1964年", "1968年"], a: 2, e: "1964年開催。高度経済成長を象徴するイベントです。" },
+      { q: "日米安全保障条約が改定された年は？", c: ["1951年", "1955年", "1960年", "1972年"], a: 2, e: "1960年に改定され、相互協力の内容が強化されました。" },
+      { q: "1956年、日本が国際社会へ復帰するきっかけとなったのは？", c: ["東京条約", "国連加盟", "日中共同声明", "日米地位協定"], a: 1, e: "1956年の国連加盟で日本は主権国家として承認されました。" }
+    ];
 
-        let quiz;
-        let remaining;
-        let remaining = [...quiz];
-        let currentQuestion = null;
-        let score = 0;
-        let wrongAnswers = [];
+    // ===== 状態管理変数 =====
+    let quiz = shuffle([...fullQuiz]).slice(0, 10);
+    let remaining = [...quiz];
+    let current = null;
+    let score = 0;
+    let wrong = [];
 
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
+    // ===== ユーティリティ =====
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
 
-        function getRank(score, total) {
-            const rate = score / total;
-            if (rate === 1) return "🏅歴史博士！パーフェクト！";
-            if (rate >= 0.8) return "🥇歴史エリート";
-            if (rate >= 0.6) return "🥈歴史マニア";
-            if (rate >= 0.4) return "🥉歴史好き見習い";
-            return "📘 これからに期待！";
-        }
+    function rankLabel(s, total) {
+      const rate = s / total;
+      if (rate === 1) return "🏅歴史博士！パーフェクト！";
+      if (rate >= 0.8) return "🥇歴史エリート";
+      if (rate >= 0.6) return "🥈歴史マニア";
+      if (rate >= 0.4) return "🥉歴史好き見習い";
+      return "📘 これからに期待！";
+    }
 
-        function loadQuestion() {
-            if (remaining.length === 0) {
-                const rank = getRank(score, 10);
-                let explanationHTML = '';
-                if (wrongAnswers.length > 0) {
-                    explanationHTML += '<div id="explanations"><h3>❗ 間違えた問題の解説：</h3>';
-                    wrongAnswers.forEach(item => {
-                        explanationHTML += `<p><strong>${item.question}</strong><br>正解：${item.correct}<br>解説：${item.explanation}</p>`;
-                    });
-                    explanationHTML += '</div>';
-                }
-                document.getElementById("quiz-box").innerHTML = `
-          <h2>🎉 クイズ終了！ 🎉</h2>
-          <p>あなたのスコアは <strong>${score} / 10</strong> です。</p>
-          <p id="rank">${rank}</p>
-          ${explanationHTML}
-          <button onclick="restartGame()">🔁 もう一度挑戦</button>
-        `;
-                return;
-            }
-            currentQuestion = remaining.pop();
-            document.getElementById("question").textContent = `Q${10 - remaining.length}. ` + currentQuestion.question;
-            const choicesDiv = document.getElementById("choices");
-            choicesDiv.innerHTML = "";
-            currentQuestion.choices.forEach((choice, index) => {
-                const btn = document.createElement("button");
-                btn.textContent = choice;
-                btn.onclick = () => checkAnswer(index);
-                choicesDiv.appendChild(btn);
-            });
-            document.getElementById("result").textContent = "";
-            document.getElementById("rank").textContent = "";
-        }
+    // ===== 出題ロジック =====
+    function loadQuestion() {
+      if (remaining.length === 0) {
+        showResult();
+        return;
+      }
+      current = remaining.pop();
+      document.getElementById("question").textContent = `Q${10 - remaining.length}. ${current.q}`;
+      const choicesDiv = document.getElementById("choices");
+      choicesDiv.innerHTML = "";
+      current.c.forEach((choice, idx) => {
+        const btn = document.createElement("button");
+        btn.textContent = choice;
+        btn.onclick = () => check(idx);
+        choicesDiv.appendChild(btn);
+      });
+      document.getElementById("result").textContent = "";
+      document.getElementById("rank").textContent = "";
+    }
 
-        function checkAnswer(selected) {
-            const correct = currentQuestion.answer;
-            const resultDiv = document.getElementById("result");
-            if (selected === correct) {
-                resultDiv.textContent = "✨ 正解！ +1点";
-                resultDiv.style.color = "green";
-                score++;
-            } else {
-                resultDiv.textContent = `❌ 不正解... 正解は「${currentQuestion.choices[correct]}」です。`;
-                resultDiv.style.color = "red";
-                wrongAnswers.push({
-                    question: currentQuestion.question,
-                    correct: currentQuestion.choices[correct],
-                    explanation: currentQuestion.explanation
-                });
-            }
-            document.getElementById("score").textContent = `スコア: ${score}`;
-        }
+    function check(selected) {
+      const correct = current.a;
+      const resDiv = document.getElementById("result");
+      if (selected === correct) {
+        resDiv.textContent = "✨ 正解！ +1点";
+        resDiv.style.color = "green";
+        score++;
+      } else {
+        resDiv.textContent = `❌ 不正解... 正解は「${current.c[correct]}」です。`;
+        resDiv.style.color = "red";
+        wrong.push({ q: current.q, correct: current.c[correct], exp: current.e });
+      }
+      document.getElementById("score").textContent = `スコア: ${score}`;
+    }
 
-        function nextQuestion() {
-            loadQuestion();
-        }
+    function nextQuestion() { loadQuestion(); }
 
-        function restartGame() {
-            quiz = shuffle([...fullQuiz]).slice(0, 10);
-            remaining = [...quiz];
-            score = 0;
-            wrongAnswers = [];
-            document.getElementById("quiz-box").innerHTML = `
+    function showResult() {
+      const rankText = rankLabel(score, 10);
+      let expHTML = "";
+      if (wrong.length) {
+        expHTML += '<div id="explanations"><h3>❗ 間違えた問題の解説：</h3>';
+        wrong.forEach(w => {
+          expHTML += `<p><strong>${w.q}</strong><br>正解：${w.correct}<br>解説：${w.exp}</p>`;
+        });
+        expHTML += '</div>';
+      }
+      document.getElementById("quiz-box").innerHTML = `
+        <h2>🎉 クイズ終了！ 🎉</h2>
+        <p>あなたのスコアは <strong>${score} / 10</strong> です。</p>
+        <p id="rank">${rankText}</p>
+        ${expHTML}
+        <button onclick="restart()">🔁 もう一度挑戦</button>
+      `;
+    }
+
+    function restart() {
+      quiz = shuffle([...fullQuiz]).slice(0, 10);
+      remaining = [...quiz];
+      score = 0;
+      wrong = [];
+      document.getElementById("quiz-box").innerHTML = `
         <div id="score">スコア: 0</div>
         <h2 id="question">問題がここに表示されます</h2>
         <div id="choices"></div>
@@ -235,11 +209,11 @@
         <div id="rank"></div>
         <button id="nextBtn" onclick="nextQuestion()">▶ 次の問題へ</button>
       `;
-            nextQuestion();
-        }
+      loadQuestion();
+    }
 
-        loadQuestion();
-    </script>
+    // 初回ロード
+    loadQuestion();
+  </script>
 </body>
-
 </html>
